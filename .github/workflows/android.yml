@@ -47,7 +47,14 @@ jobs:
       - name: Build release APK
         env:
           VERSION_CODE: ${{ github.run_number }}
-        run: gradle assembleRelease --no-daemon
+        run: |
+          # retry: downloads from Maven can fail temporarily (HTTP 429)
+          n=0
+          until gradle assembleRelease --no-daemon; do
+            n=$((n+1))
+            if [ "$n" -ge 3 ]; then echo "build failed 3 times"; exit 1; fi
+            echo "retrying in 60 s (attempt $((n+1)) of 3)"; sleep 60
+          done
 
       - name: Show size
         run: ls -lh app/build/outputs/apk/release/*.apk
