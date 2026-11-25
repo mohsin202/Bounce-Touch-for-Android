@@ -1,0 +1,40 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'rovio.nokia.bouncetouch'
+    compileSdk 37
+
+    defaultConfig {
+        applicationId 'rovio.nokia.bouncetouch'
+        minSdk 14
+        targetSdk 37
+        versionCode (System.getenv('VERSION_CODE') ?: '1') as int
+        versionName '0.1'
+    }
+
+    signingConfigs {
+        release {
+            storeFile rootProject.file(System.getenv('KS_PATH') ?: 'release.keystore')
+            storePassword System.getenv('KS_PASS') ?: 'android'
+            keyAlias System.getenv('KS_ALIAS') ?: 'bounce'
+            keyPassword System.getenv('KS_PASS') ?: 'android'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            signingConfig signingConfigs.release
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions { jvmTarget = '17' }
+    // textures are already PNG; do not compress twice
+    androidResources { noCompress += ['png', 'bin'] }
+}
