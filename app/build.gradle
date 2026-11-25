@@ -11,7 +11,7 @@ android {
         applicationId 'rovio.nokia.bouncetouch'
         minSdk 14
         targetSdk 37
-        versionCode (System.getenv('VERSION_CODE') ?: '1') as int
+        versionCode = Integer.parseInt(System.getenv('VERSION_CODE') ?: '1')
         versionName '0.1'
     }
 
