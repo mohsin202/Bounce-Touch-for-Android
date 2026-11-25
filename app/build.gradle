@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'rovio.nokia.bouncetouch'
-    compileSdk 37
+    compileSdk 36
 
     defaultConfig {
         applicationId 'rovio.nokia.bouncetouch'
